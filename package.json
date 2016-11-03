@@ -1,0 +1,27 @@
+{
+  "name": "symf3_rest_api",
+  "version": "1.0.0",
+  "description": "test task",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "dependencies": {
+    "apidoc": "^0.16.1"
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Vladimir-Voloshin/poland_tt.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Vladimir-Voloshin/poland_tt/issues"
+  },
+  "homepage": "https://github.com/Vladimir-Voloshin/poland_tt#readme",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "docs": "apidoc -i src/AppBundle/ -o web/api/docs/"
+  }
+}

@@ -52,10 +52,10 @@ class TodoController extends Controller
     }
 
     /**
-     * Finds and displays a todo entity.
+     * Puts todo entity.
      *
      */
-    public function showAction(Todo $todo)
+    public function putAction(Todo $todo)
     {
         $deleteForm = $this->createDeleteForm($todo);
 
@@ -66,10 +66,10 @@ class TodoController extends Controller
     }
 
     /**
-     * Displays a form to edit an existing todo entity.
+     * Patches an existing todo entity.
      *
      */
-    public function editAction(Request $request, Todo $todo)
+    public function patchAction(Request $request, Todo $todo)
     {
         $deleteForm = $this->createDeleteForm($todo);
         $editForm = $this->createForm('AppBundle\Form\TodoType', $todo);
@@ -90,7 +90,33 @@ class TodoController extends Controller
 
     /**
      * Deletes a todo entity.
+     * 
+     * @api {post} /phone/item/update Update Item
+     * @apiName Update
+     * @apiGroup Item
+     * @apiVersion 1.0.2
      *
+     * @apiParam  {String} id item ID.
+     * @apiParam  {String} name name (optional).
+     * @apiParam  {String} description description (optional).
+     * @apiParam  {String} price price (optional).
+     * @apiParam  {Integer} productLink productLink (optional).
+     * @apiParam  {String} returnPolicy return Policy (optional).
+     * @apiParam  {Integer} count count (optional).
+     * @apiParam  {Integer} likes likes (optional).
+     * @apiParam  {String} sku sku (optional).
+     * @apiParam  {Integer} shippingCost shipping Cost (optional).
+     * @apiParam  {String} category category ID (optional).
+     * @apiParam  {String} zip ZIP code (optional).
+     * @apiParam  {Boolean} isOffered Offer ability (optional).
+     * @apiParam  {String} lowPrice Low price for offer (optional).
+     * @apiParam  {Array} imageFiles - array of files (optional).
+     * @apiParam  {Array} images[{"id" : "123123", "order" : 1}] Images for update (optional).
+     * @apiParam  {Array} videos[{"id" : "123123", "order" : 1}] videos for update (optional).
+     * @apiParam  {Array} address Object {"first":"first", "last":"last"(optional), "street":"street", "state":"state", "city":"city", "zip":"zip", "street2":"street2", "phone":"phone"} for address (optional).
+     * @apiParam  {Array} box {"weight_units": "LB","height": 12,"width": 10,"length": 8,"size_units": "IN","name":"custom"}, Standard box id (optional).
+     * @apiParam  {Array} carriers Array of Carrier ID (optional).
+     * @apiParam  {Array} typeDetails array of typeDetails Ids. (optional)
      */
     public function deleteAction(Request $request, Todo $todo)
     {
@@ -104,21 +130,5 @@ class TodoController extends Controller
         }
 
         return $this->redirectToRoute('todo_index');
-    }
-
-    /**
-     * Creates a form to delete a todo entity.
-     *
-     * @param Todo $todo The todo entity
-     *
-     * @return \Symfony\Component\Form\Form The form
-     */
-    private function createDeleteForm(Todo $todo)
-    {
-        return $this->createFormBuilder()
-            ->setAction($this->generateUrl('todo_delete', array('id' => $todo->getId())))
-            ->setMethod('DELETE')
-            ->getForm()
-        ;
     }
 }

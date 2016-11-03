@@ -4,70 +4,87 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\Todo;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use AppBundle\Annotation\ApiName;
+use AppBundle\Annotation\ApiGroup;
+use AppBundle\Annotation\ApiVersion;
 
 /**
  * Todo controller.
- *
+ * 
  */
 class TodoController extends Controller
 {
     /**
      * Lists all todo entities.
      *
+     * @api {get} /todo/ gets all the Todo items listed
+     * @apiName List Todos
+     * @apiGroup Todo
+     * @apiVersion 1.0.2
+     *
      */
     public function indexAction()
     {
         $em = $this->getDoctrine()->getManager();
-
         $todos = $em->getRepository('AppBundle:Todo')->findAll();
-
-        return $this->render('todo/index.html.twig', array(
-            'todos' => $todos,
-        ));
+        
+        return new JsonResponse($todos);
     }
-
+    
     /**
-     * Creates a new todo entity.
+     * Creates new todo
      *
+     * @api {post} /todo/ post a new todo
+     * @apiName New Todo
+     * @apiGroup Todo
+     * @apiVersion 1.0.2
+     *
+     * @apiParam  {String} name name of the Todo item
+     * @apiParam  {String} description description of the Todo item
+     * @apiParam  {Date} deadline date of deadline for the Todo item
      */
     public function newAction(Request $request)
     {
-        $todo = new Todo();
-        $form = $this->createForm('AppBundle\Form\TodoType', $todo);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($todo);
-            $em->flush($todo);
-
-            return $this->redirectToRoute('todo_show', array('id' => $todo->getId()));
-        }
-
-        return $this->render('todo/new.html.twig', array(
-            'todo' => $todo,
-            'form' => $form->createView(),
-        ));
+        $responce = $this->get('app.todo_manager')->saveTodo($request->request->all());
+        return new JsonResponse($responce);
     }
 
     /**
      * Puts todo entity.
      *
+     * @api {put} /todo/{id} put todo
+     * @apiName Put a Todo
+     * @apiGroup Todo
+     * @apiVersion 1.0.2
+     *
+     * @apiParam  {String} id item ID.
+     * @apiParam  {String} name name of the Todo item
+     * @apiParam  {String} description description of the Todo item
+     * @apiParam  {Date} deadline date of deadline for the Todo item
+     * @apiParam  {Boolean} completed whether a Todo item is completed
+     * 
      */
-    public function putAction(Todo $todo)
+    public function putAction(Request $request, $todoId)
     {
-        $deleteForm = $this->createDeleteForm($todo);
-
-        return $this->render('todo/show.html.twig', array(
-            'todo' => $todo,
-            'delete_form' => $deleteForm->createView(),
-        ));
+        $responce = $this->get('dunk.position_manager')->saveTodo($todoId, $request->request->all());
+        return new JsonResponse($responce);
     }
 
     /**
      * Patches an existing todo entity.
      *
+     * @api {patch} /todo/{id} patch a todo
+     * @apiName Patch Todo
+     * @apiGroup Todo
+     * @apiVersion 1.0.2
+     *
+     * @apiParam  {String} id item ID.
+     * @apiParam  {String} [name] name of the Todo item
+     * @apiParam  {String} [description] description of the Todo item
+     * @apiParam  {Date} [deadline] date of deadline for the Todo item
+     * @apiParam  {Boolean} [completed] whether a Todo item is completed
      */
     public function patchAction(Request $request, Todo $todo)
     {
@@ -87,36 +104,16 @@ class TodoController extends Controller
             'delete_form' => $deleteForm->createView(),
         ));
     }
-
+    
     /**
-     * Deletes a todo entity.
-     * 
-     * @api {post} /phone/item/update Update Item
-     * @apiName Update
-     * @apiGroup Item
+     * Patches an existing todo entity.
+     *
+     * @api {delete} /todo/{id} delete a todo
+     * @apiName Delete Todo
+     * @apiGroup Todo
      * @apiVersion 1.0.2
      *
-     * @apiParam  {String} id item ID.
-     * @apiParam  {String} name name (optional).
-     * @apiParam  {String} description description (optional).
-     * @apiParam  {String} price price (optional).
-     * @apiParam  {Integer} productLink productLink (optional).
-     * @apiParam  {String} returnPolicy return Policy (optional).
-     * @apiParam  {Integer} count count (optional).
-     * @apiParam  {Integer} likes likes (optional).
-     * @apiParam  {String} sku sku (optional).
-     * @apiParam  {Integer} shippingCost shipping Cost (optional).
-     * @apiParam  {String} category category ID (optional).
-     * @apiParam  {String} zip ZIP code (optional).
-     * @apiParam  {Boolean} isOffered Offer ability (optional).
-     * @apiParam  {String} lowPrice Low price for offer (optional).
-     * @apiParam  {Array} imageFiles - array of files (optional).
-     * @apiParam  {Array} images[{"id" : "123123", "order" : 1}] Images for update (optional).
-     * @apiParam  {Array} videos[{"id" : "123123", "order" : 1}] videos for update (optional).
-     * @apiParam  {Array} address Object {"first":"first", "last":"last"(optional), "street":"street", "state":"state", "city":"city", "zip":"zip", "street2":"street2", "phone":"phone"} for address (optional).
-     * @apiParam  {Array} box {"weight_units": "LB","height": 12,"width": 10,"length": 8,"size_units": "IN","name":"custom"}, Standard box id (optional).
-     * @apiParam  {Array} carriers Array of Carrier ID (optional).
-     * @apiParam  {Array} typeDetails array of typeDetails Ids. (optional)
+     * @apiParam  {String} id of the Todo item
      */
     public function deleteAction(Request $request, Todo $todo)
     {

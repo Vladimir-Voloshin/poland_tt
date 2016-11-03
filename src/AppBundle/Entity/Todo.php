@@ -8,6 +8,8 @@ use AppBundle\Entity\BaseEntity;
  */
 class Todo extends BaseEntity
 {
+        
+    
     /**
      * @var int
      */
@@ -138,6 +140,22 @@ class Todo extends BaseEntity
     public function getCompleted()
     {
         return $this->completed;
+    }
+    
+    /**
+     * Make array out of Todo object
+     *
+     * @return mixed[]
+     */
+    public function toJson()
+    {
+        return array(
+            'id' => $this->id,
+            'Name' => $this->name,
+            'Description' => $this->description,
+            'Deadline' => $this->deadline,
+            'Completed' => $this->completed,
+        );
     }
 }
 

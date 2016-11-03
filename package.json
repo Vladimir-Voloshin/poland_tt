@@ -22,6 +22,6 @@
   "homepage": "https://github.com/Vladimir-Voloshin/poland_tt#readme",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "docs": "apidoc -i src/AppBundle/ -o web/api/docs/"
+    "docs": "apidoc -i src/AppBundle/ -o web/doc/"
   }
 }

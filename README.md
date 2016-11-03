@@ -1,68 +1,47 @@
-Symfony Standard Edition
+Rest Api
 ========================
 
-Welcome to the Symfony Standard Edition - a fully-functional Symfony
-application that you can use as the skeleton for your new applications.
+Symfony 3.0 REST API Project Recruitment Test Task
 
-For details on how to download and get started with Symfony, see the
-[Installation][1] chapter of the Symfony Documentation.
-
-What's inside?
+Task
 --------------
 
-The Symfony Standard Edition is configured with the following defaults:
+Your task is to create API for TODO list
 
-  * An AppBundle you can use to start coding;
+GET - list of todos
 
-  * Twig as the only configured template engine;
+POST - create new todo
 
-  * Doctrine ORM/DBAL;
+PUT - edit todo item
 
-  * Swiftmailer;
+DELETE - delete todo item
 
-  * Annotations enabled for everything.
+PATCH - to complete todo item
 
-It comes pre-configured with the following bundles:
+```
 
-  * **FrameworkBundle** - The core Symfony framework bundle
+GET /todo
+PUT /todo/{id}
+POST /todo
+DELETE /todo/{id}
+PATCH /todo/{id}
 
-  * [**SensioFrameworkExtraBundle**][6] - Adds several enhancements, including
-    template and routing annotation capability
+```
 
-  * [**DoctrineBundle**][7] - Adds support for the Doctrine ORM
+Every todo item have
 
-  * [**TwigBundle**][8] - Adds support for the Twig templating engine
+name - max 255 chars cannot be null
 
-  * [**SecurityBundle**][9] - Adds security by integrating Symfony's security
-    component
+description - text type can be null
 
-  * [**SwiftmailerBundle**][10] - Adds support for Swiftmailer, a library for
-    sending emails
+deadline - dateTime type cannot be null, only date from future
 
-  * [**MonologBundle**][11] - Adds support for Monolog, a logging library
+completed - boolean type cannot be null
 
-  * **WebProfilerBundle** (in dev/test env) - Adds profiling functionality and
-    the web debug toolbar
+To test API you could use Curl or Postman.
 
-  * **SensioDistributionBundle** (in dev/test env) - Adds functionality for
-    configuring and working with Symfony distributions
+(https://chrome.google.com/webstore/detail/postman/fhbjgbiflinjbdggehcddcbncdddomop)
 
-  * [**SensioGeneratorBundle**][13] (in dev/test env) - Adds code generation
-    capabilities
+API documentation is avalible at (http://localhost.dev:8080/doc). Your job is also to add actons to this documentation. Nelmio API Bundle
 
-  * **DebugBundle** (in dev/test env) - Adds Debug and VarDumper component
-    integration
-
-All libraries and bundles included in the Symfony Standard Edition are
-released under the MIT or BSD license.
-
-Enjoy!
-
-[1]:  https://symfony.com/doc/3.0/book/installation.html
-[6]:  https://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/index.html
-[7]:  https://symfony.com/doc/3.0/book/doctrine.html
-[8]:  https://symfony.com/doc/3.0/book/templating.html
-[9]:  https://symfony.com/doc/3.0/book/security.html
-[10]: https://symfony.com/doc/3.0/cookbook/email.html
-[11]: https://symfony.com/doc/3.0/cookbook/logging/monolog.html
-[13]: https://symfony.com/doc/3.0/bundles/SensioGeneratorBundle/index.html
+On job interview we perform code review for your work.

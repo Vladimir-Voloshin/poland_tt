@@ -1,0 +1,26 @@
+AppBundle\Entity\Todo:
+    type: entity
+    table: todo
+    repositoryClass: AppBundle\Repository\TodoRepository
+    properties:
+        deadline:
+            - GreaterThanOrEqual: today
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        name:
+            type: string
+            length: 255
+        description:
+            type: text
+        deadline:
+            type: datetime
+        completed:
+            type: boolean
+    lifecycleCallbacks:
+            prePersist: [setCreatedValue]
+            preUpdate:  [setUpdatedValue]

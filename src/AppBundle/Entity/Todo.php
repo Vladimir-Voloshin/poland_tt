@@ -8,8 +8,6 @@ use AppBundle\Entity\BaseEntity;
  */
 class Todo extends BaseEntity
 {
-        
-    
     /**
      * @var int
      */
@@ -34,7 +32,16 @@ class Todo extends BaseEntity
      * @var bool
      */
     private $completed;
-
+    
+    /**
+     * @var \DateTime
+     */
+    private $created;
+    
+    /**
+     * @var \DateTime
+     */
+    private $updated;
 
     /**
      * Get id
@@ -44,6 +51,20 @@ class Todo extends BaseEntity
     public function getId()
     {
         return $this->id;
+    }
+    
+    /**
+     * Set id
+     *
+     * @param integer $id
+     *
+     * @return Todo
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+    
+        return $this;
     }
 
     /**
@@ -140,6 +161,54 @@ class Todo extends BaseEntity
     public function getCompleted()
     {
         return $this->completed;
+    }
+    
+    /**
+     * Set created
+     *
+     * @param \DateTime $created
+     *
+     * @return Todo
+     */
+    public function setCreated($created)
+    {
+        $this->created = $created;
+        
+        return $this;
+    }
+    
+    /**
+     * Get created
+     *
+     * @return \DateTime
+     */
+    public function getCreated()
+    {
+        return $this->created;
+    }
+    
+    /**
+     * Set updated
+     *
+     * @param \DateTime $updated
+     *
+     * @return Todo
+     */
+    public function setUpdated($updated)
+    {
+        $this->updated = $updated;
+        
+        return $this;
+    }
+    
+    /**
+     * Get updated
+     *
+     * @return \DateTime
+     */
+    public function getUpdated()
+    {
+        return $this->updated;
     }
     
     /**

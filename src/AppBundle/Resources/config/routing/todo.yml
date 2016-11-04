@@ -20,5 +20,5 @@ todo_delete:
 
 todo_patch:
     path:     /{id}
-    defaults: { _controller: "AppBundle:Todo:edit" }
+    defaults: { _controller: "AppBundle:Todo:patch" }
     methods:  PATCH

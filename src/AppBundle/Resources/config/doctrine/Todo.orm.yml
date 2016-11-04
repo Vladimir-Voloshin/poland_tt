@@ -21,6 +21,11 @@ AppBundle\Entity\Todo:
             type: datetime
         completed:
             type: boolean
+        created:
+            type: datetime
+        updated:
+            type: datetime
+            nullable: true
     lifecycleCallbacks:
             prePersist: [setCreatedValue]
             preUpdate:  [setUpdatedValue]

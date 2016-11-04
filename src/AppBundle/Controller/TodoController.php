@@ -9,6 +9,7 @@ use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Annotation\ApiName;
 use AppBundle\Annotation\ApiGroup;
 use AppBundle\Annotation\ApiVersion;
+use AppBundle\Annotation\ApiParam;
 
 /**
  * Todo controller.
@@ -59,16 +60,16 @@ class TodoController extends Controller
      * @apiGroup Todo
      * @apiVersion 1.0.2
      *
-     * @apiParam  {String} id item ID.
+     * @apiParam  {String} id Todo item ID.
      * @apiParam  {String} name name of the Todo item
      * @apiParam  {String} description description of the Todo item
      * @apiParam  {Date} deadline date of deadline for the Todo item
      * @apiParam  {Boolean} completed whether a Todo item is completed
      * 
      */
-    public function putAction(Request $request, $todoId)
+    public function putAction(Request $request, $id)
     {
-        $responce = $this->get('dunk.position_manager')->saveTodo($todoId, $request->request->all());
+        $responce = $this->get('app.todo_manager')->putTodo($id, $request->request->all());
         return new JsonResponse($responce);
     }
 
@@ -80,52 +81,31 @@ class TodoController extends Controller
      * @apiGroup Todo
      * @apiVersion 1.0.2
      *
-     * @apiParam  {String} id item ID.
+     * @apiParam  {String} id Todo item ID.
      * @apiParam  {String} [name] name of the Todo item
      * @apiParam  {String} [description] description of the Todo item
      * @apiParam  {Date} [deadline] date of deadline for the Todo item
      * @apiParam  {Boolean} [completed] whether a Todo item is completed
      */
-    public function patchAction(Request $request, Todo $todo)
+    public function patchAction(Request $request, $id)
     {
-        $deleteForm = $this->createDeleteForm($todo);
-        $editForm = $this->createForm('AppBundle\Form\TodoType', $todo);
-        $editForm->handleRequest($request);
-
-        if ($editForm->isSubmitted() && $editForm->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
-
-            return $this->redirectToRoute('todo_edit', array('id' => $todo->getId()));
-        }
-
-        return $this->render('todo/edit.html.twig', array(
-            'todo' => $todo,
-            'edit_form' => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
-        ));
+        $responce = $this->get('app.todo_manager')->updateTodo($id, $request->request->all());
+        return new JsonResponse($responce);
     }
     
     /**
-     * Patches an existing todo entity.
+     * Deletes an existing todo entity by ID.
      *
      * @api {delete} /todo/{id} delete a todo
      * @apiName Delete Todo
      * @apiGroup Todo
      * @apiVersion 1.0.2
      *
-     * @apiParam  {String} id of the Todo item
+     * @apiParam  {String} id  id of the Todo item
      */
-    public function deleteAction(Request $request, Todo $todo)
+    public function deleteAction($id)
     {
-        $form = $this->createDeleteForm($todo);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->remove($todo);
-            $em->flush($todo);
-        }
-
-        return $this->redirectToRoute('todo_index');
+        $responce = $this->get('app.todo_manager')->deleteTodo($id);
+        return new JsonResponse($responce);
     }
 }

@@ -1,0 +1,5 @@
+services:
+    app.todo_manager:
+        class: AppBundle\Services\TodoManagerService
+        arguments:
+            doctrine:   "@doctrine.orm.entity_manager"

@@ -30,8 +30,12 @@ class TodoController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $todos = $em->getRepository('AppBundle:Todo')->findAll();
+        $resultArray = [];
+        foreach ($todos as $todo){
+            array_push($resultArray, $todo->toJson());
+        }
         
-        return new JsonResponse($todos);
+        return new JsonResponse($resultArray);
     }
     
     /**

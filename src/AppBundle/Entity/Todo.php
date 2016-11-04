@@ -224,6 +224,8 @@ class Todo extends BaseEntity
             'Description' => $this->description,
             'Deadline' => $this->deadline,
             'Completed' => $this->completed,
+            'Created' => $this->created,
+            'Udpated' => $this->updated,
         );
     }
 }

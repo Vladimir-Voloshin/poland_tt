@@ -14,7 +14,7 @@
             "type": "String",
             "optional": false,
             "field": "id",
-            "description": "<p>of the Todo item</p>"
+            "description": "<p>id of the Todo item</p>"
           }
         ]
       }
@@ -84,7 +84,7 @@
             "type": "String",
             "optional": false,
             "field": "id",
-            "description": "<p>item ID.</p>"
+            "description": "<p>Todo item ID.</p>"
           },
           {
             "group": "Parameter",
@@ -135,7 +135,7 @@
             "type": "String",
             "optional": false,
             "field": "id",
-            "description": "<p>item ID.</p>"
+            "description": "<p>Todo item ID.</p>"
           },
           {
             "group": "Parameter",
